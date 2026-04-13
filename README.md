@@ -9,16 +9,15 @@
 PDI/
 ├── README.md
 ├── requirements.txt
-├── TP1/
+├── PDI_TUIA_2026/
 │   ├── informe.pdf
-│   ├── imagenes/
-│   │   ├── Imagen_con_objetos_ocultos.tiff
-│   │   ├── examen_1.png  ...  examen_5.png
-│   ├── Problema1/
-│   │   └── problema1.py
-│   └── Problema2/
-│       ├── problema2_AC.py
-│       └── problema2_BD.py
+│   ├── PROBLEMA1.py
+│   ├── PROBLEMA2.py
+│   ├── examen_1.png
+│   ├── examen_2.png
+│   ├── examen_3.png
+│   ├── examen_4.png
+│   ├── examen_5.png
 ```
 
 ---
