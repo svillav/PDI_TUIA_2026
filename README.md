@@ -62,7 +62,7 @@ Imprime para cada examen:
   Pregunta  1: OK  (marcó: C, correcta: C)
   Pregunta  2: MAL (marcó: vacío, correcta: B)
   ...
-  Correctas: 8/10 -> APROBADO
+  Correctas: 6/10 -> APROBADO
 ```
 
 Para ver el detalle interno de la detección:
