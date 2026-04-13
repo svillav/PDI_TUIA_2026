@@ -46,6 +46,8 @@ matplotlib
 cd PDI_TUIA_2026
 python PROBLEMA1.py
 ```
+------------------
+
 
 ### Problema 2 
 
