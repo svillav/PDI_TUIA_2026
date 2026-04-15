@@ -267,3 +267,62 @@ def corregir_examen(ruta_imagen, verbose=True, debug=False):
 #corregir_examen('examen_2.png', debug=True)
 for ruta in ['examen_1.png','examen_2.png','examen_3.png','examen_4.png','examen_5.png']:
     corregir_examen(ruta, verbose=True)
+
+
+
+
+def validar_punto_b(img):
+    """
+    Segmenta el encabezado en tres areas (Name, Date, Class) usando coordenadas fijas.
+    Utiliza 'encontrar_grupos' para contabilizar caracteres y medir espacios entre ellos.
+    Verifica restricciones de cantidad (Name <= 25, Date = 8, Class = 1) y separación de palabras.
+    """
+
+    alto_h = 25
+    config = [
+        {'nombre': 'Name',  'x': 60,  'y': 5, 'w': 180},
+        {'nombre': 'Date',  'x': 295, 'y': 5, 'w': 75},
+        {'nombre': 'Class', 'x': 420, 'y': 6, 'w': 35}
+    ]
+
+    for campo in config:
+        x, y, w = campo['x'], campo['y'], campo['w']
+        crop = img[y:y+alto_h, x:x+w]
+        crop_bin = (crop < 120).astype(np.uint8)
+        suma_cols = np.sum(crop_bin, axis=0)
+        
+        # Usamos un umbral bajo (2) porque las letras son finas
+        caracteres = encontrar_grupos(suma_cols, umbral=2)
+        
+        cantidad = len(caracteres)
+        res = "MAL"
+
+        if campo['nombre'] == 'Name':
+            # Buscamos espacios grandes entre grupos de letras
+            espacios_grandes = 0
+            for i in range(len(caracteres) - 1):
+                gap = caracteres[i+1][0] - caracteres[i][1]
+                if gap > 7: # Umbral de píxeles para considerar "espacio"
+                    espacios_grandes += 1
+            
+            if espacios_grandes >= 1 and 2 <= cantidad <= 25:
+                res = "OK"
+
+        elif campo['nombre'] == 'Date':
+            if cantidad == 8:
+                res = "OK"
+
+        elif campo['nombre'] == 'Class':
+            if cantidad == 1:
+                res = "OK"
+
+        print(f"{campo['nombre']}: {res} ")
+
+
+archivos = ['examen_1.png', 'examen_2.png', 'examen_3.png', 'examen_4.png', 'examen_5.png' ]
+for nombre_archivo in archivos:
+    img_test = cv2.imread(nombre_archivo, cv2.IMREAD_GRAYSCALE)
+    print(f"\nResultados para {nombre_archivo}:")
+    validar_punto_b(img_test)
+
+
