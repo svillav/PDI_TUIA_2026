@@ -270,8 +270,11 @@ for ruta in ['examen_1.png','examen_2.png','examen_3.png','examen_4.png','examen
 
 
 
+# =====================================================================
+# PROBLEMA 2 - Parte B
+# =====================================================================
 
-def validar_punto_b(img):
+def validar_datos(img):
     """
     Segmenta el encabezado en tres areas (Name, Date, Class) usando coordenadas fijas.
     Utiliza 'encontrar_grupos' para contabilizar caracteres y medir espacios entre ellos.
@@ -320,9 +323,43 @@ def validar_punto_b(img):
 
 
 archivos = ['examen_1.png', 'examen_2.png', 'examen_3.png', 'examen_4.png', 'examen_5.png' ]
+
 for nombre_archivo in archivos:
     img_test = cv2.imread(nombre_archivo, cv2.IMREAD_GRAYSCALE)
     print(f"\nResultados para {nombre_archivo}:")
-    validar_punto_b(img_test)
+    validar_datos(img_test)
 
 
+# =====================================================================
+# PROBLEMA 2 - Parte D
+# =====================================================================
+
+fig, axes = plt.subplots(len(archivos), 1, figsize=(5, 6))
+fig.suptitle("RESULTADOS FINALES", fontsize=12, fontweight='bold')
+
+for i, nombre in enumerate(archivos):
+    img = cv2.imread(nombre, cv2.IMREAD_GRAYSCALE)
+    
+
+    res = corregir_examen(nombre, verbose=False)
+    color = 'green' if res['aprobado'] else 'red'
+    texto = "APROBADO" if res['aprobado'] else "REPROBADO"
+
+    crop_name = img[5:30, 60:240]
+
+    axes[i].imshow(crop_name, cmap='gray')
+    
+    # Texto a la derecha del recorte para ahorrar espacio vertical.
+    axes[i].set_ylabel(f"{texto}", color=color, fontweight='bold', rotation=0, labelpad=40, va='center')
+    axes[i].set_title(f"Archivo: {nombre}", loc='left', fontsize=9)
+    
+    # Limpiar el grafico y poner borde de color verde si esta aprobado, rojo en caso contrario.
+    axes[i].set_xticks([])
+    axes[i].set_yticks([])
+    for spine in axes[i].spines.values():
+        spine.set_edgecolor(color)
+        spine.set_linewidth(2)
+        spine.set_visible(True)
+
+plt.tight_layout()
+plt.show()
