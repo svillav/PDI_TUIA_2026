@@ -300,6 +300,7 @@ def validar_datos(img):
         cantidad = len(caracteres)
         res = "MAL"
 
+        # comienzo a analizar las condiciones 
         if campo['nombre'] == 'Name':
             # Buscamos espacios grandes entre grupos de letras
             espacios_grandes = 0
@@ -307,14 +308,11 @@ def validar_datos(img):
                 gap = caracteres[i+1][0] - caracteres[i][1]
                 if gap > 7: # Umbral de píxeles para considerar "espacio"
                     espacios_grandes += 1
-            
             if espacios_grandes >= 1 and 2 <= cantidad <= 25:
                 res = "OK"
-
         elif campo['nombre'] == 'Date':
             if cantidad == 8:
                 res = "OK"
-
         elif campo['nombre'] == 'Class':
             if cantidad == 1:
                 res = "OK"
@@ -333,30 +331,32 @@ for nombre_archivo in archivos:
 # =====================================================================
 # PROBLEMA 2 - Parte D
 # =====================================================================
-
-fig, axes = plt.subplots(len(archivos), 1, figsize=(5, 6))
+archivos = ['examen_1.png', 'examen_2.png', 'examen_3.png', 'examen_4.png', 'examen_5.png' ]
+#creo la figura
+fig, ax = plt.subplots(len(archivos), 1, figsize=(5, 6))
 fig.suptitle("RESULTADOS FINALES", fontsize=12, fontweight='bold')
 
 for i, nombre in enumerate(archivos):
     img = cv2.imread(nombre, cv2.IMREAD_GRAYSCALE)
     
-
+    # utilizo la funcion que me devuelve si aprobo o no 
     res = corregir_examen(nombre, verbose=False)
     color = 'green' if res['aprobado'] else 'red'
     texto = "APROBADO" if res['aprobado'] else "REPROBADO"
-
+    # hago el recorte del nombre
     crop_name = img[5:30, 60:240]
 
-    axes[i].imshow(crop_name, cmap='gray')
+    # muestro el corte 
+    ax[i].imshow(crop_name, cmap='gray')
     
-    # Texto a la derecha del recorte para ahorrar espacio vertical.
-    axes[i].set_ylabel(f"{texto}", color=color, fontweight='bold', rotation=0, labelpad=40, va='center')
-    axes[i].set_title(f"Archivo: {nombre}", loc='left', fontsize=9)
+    ax[i].set_ylabel(f"{texto}", color=color, fontweight='bold', rotation=0, labelpad=40, va='center')
+    ax[i].set_title(f"Archivo: {nombre}", loc='left', fontsize=9)
     
-    # Limpiar el grafico y poner borde de color verde si esta aprobado, rojo en caso contrario.
-    axes[i].set_xticks([])
-    axes[i].set_yticks([])
-    for spine in axes[i].spines.values():
+    # Limpia el grafico y pone borde de color verde si esta aprobado, rojo en caso contrario.
+    ax[i].set_xticks([])
+    ax[i].set_yticks([])
+    # Recorro el cuadro y cambio los colores de los bordes
+    for spine in ax[i].spines.values():
         spine.set_edgecolor(color)
         spine.set_linewidth(2)
         spine.set_visible(True)
