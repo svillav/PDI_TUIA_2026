@@ -38,7 +38,7 @@ def ecualizacion_local_histograma(img, M, N):
 
 def main():
     # Carga de imagen con escala de grises
-    path = 'Imagen_con_detalles_escondidos.tif'        
+    path = 'src/Imagen_con_detalles_escondidos.tif'        
     img = cv2.imread(path, cv2.IMREAD_GRAYSCALE)
 
     # Ecualización de imagenes con distintos tamaños de ventana

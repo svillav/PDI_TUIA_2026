@@ -71,12 +71,10 @@ def identificar_letra(bin_zona, stat):
         return 'C'
  
     # Re-binarizamos con Otsu para mejor contraste local
-    _, letra_bin = cv2.threshold(letra_crop, 0, 255,
-                                 cv2.THRESH_BINARY + cv2.THRESH_OTSU)
+    _, letra_bin = cv2.threshold(letra_crop, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
  
     # --- Contornos para detectar B (2 agujeros) ---
-    contornos, jerarquia = cv2.findContours(letra_bin, cv2.RETR_TREE,
-                                            cv2.CHAIN_APPROX_SIMPLE)
+    contornos, jerarquia = cv2.findContours(letra_bin, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
     n_hijos = 0
     if jerarquia is not None and len(contornos) > 0:
         cont_validos = [(i, c) for i, c in enumerate(contornos)
@@ -206,7 +204,7 @@ def corregir_examen(ruta_imagen, verbose=True, debug=False):
         print(f"Error: no se pudo leer '{ruta_imagen}'")
         return None
  
-    filas, cols = detectar_grilla(img)
+    filas, cols = detectar_grilla(img) # Acá ya tenemos las líneas con un sólo px de ancho
  
     if len(filas) < 6 or len(cols) < 4:
         print(f"Error: grilla no detectada en '{ruta_imagen}'")
@@ -265,7 +263,7 @@ def corregir_examen(ruta_imagen, verbose=True, debug=False):
     }
 
 #corregir_examen('examen_2.png', debug=True)
-for ruta in ['examen_1.png','examen_2.png','examen_3.png','examen_4.png','examen_5.png']:
+for ruta in ['src/examen_1.png','src/examen_2.png','src/examen_3.png','src/examen_4.png','src/examen_5.png']:
     corregir_examen(ruta, verbose=True)
 
 
@@ -320,7 +318,7 @@ def validar_datos(img):
         print(f"{campo['nombre']}: {res} ")
 
 
-archivos = ['examen_1.png', 'examen_2.png', 'examen_3.png', 'examen_4.png', 'examen_5.png' ]
+archivos = ['src/examen_1.png', 'src/examen_2.png', 'src/examen_3.png', 'src/examen_4.png', 'src/examen_5.png' ]
 
 for nombre_archivo in archivos:
     img_test = cv2.imread(nombre_archivo, cv2.IMREAD_GRAYSCALE)
@@ -331,7 +329,7 @@ for nombre_archivo in archivos:
 # =====================================================================
 # PROBLEMA 2 - Parte D
 # =====================================================================
-archivos = ['examen_1.png', 'examen_2.png', 'examen_3.png', 'examen_4.png', 'examen_5.png' ]
+archivos = ['src/examen_1.png', 'src/examen_2.png', 'src/examen_3.png', 'src/examen_4.png', 'src/examen_5.png' ]
 #creo la figura
 fig, ax = plt.subplots(len(archivos), 1, figsize=(5, 6))
 fig.suptitle("RESULTADOS FINALES", fontsize=12, fontweight='bold')

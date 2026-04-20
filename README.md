@@ -6,10 +6,10 @@
 ## Estructura del repositorio
 
 ```
-PDI/
+PDI_TUIA_2026/
 ├── README.md
 ├── requirements.txt
-├── PDI_TUIA_2026/
+├── src/
 │   ├── informe.pdf
 │   ├── PROBLEMA1.py
 │   ├── PROBLEMA2.py
@@ -18,7 +18,19 @@ PDI/
 │   ├── examen_3.png
 │   ├── examen_4.png
 │   ├── examen_5.png
+│   ├── Imagen_con_detalles_escondidos.tif
 ```
+
+---
+
+## Entorno virtual
+
+```bash
+python -m venv venv
+source venv/bin/activate      # Linux/Mac
+venv\Scripts\activate         # Windows
+```
+
 
 ---
 
@@ -42,8 +54,7 @@ matplotlib
 ### Problema 1
 
 ```bash
-cd PDI_TUIA_2026
-python PROBLEMA1.py
+python src/PROBLEMA1.py
 ```
 ------------------
 
@@ -51,32 +62,7 @@ python PROBLEMA1.py
 ### Problema 2 
 
 ```bash
-cd PDI_TUIA_2026
-python PROBLEMA2.py
-```
-
-Imprime para cada examen:
-```
---- examen_1.png ---
-  Pregunta  1: OK  (marcó: C, correcta: C)
-  Pregunta  2: MAL (marcó: vacío, correcta: B)
-  ...
-  Correctas: 6/10 -> APROBADO
-```
-
-Para ver el detalle interno de la detección:
-
-```python
-corregir_examen('examen_2.png', debug=True)
+python src/PROBLEMA2.py
 ```
 
 ---
-
-## Entorno virtual
-
-```bash
-python -m venv venv
-source venv/bin/activate      # Linux/Mac
-venv\Scripts\activate         # Windows
-pip install -r requirements.txt
-```
